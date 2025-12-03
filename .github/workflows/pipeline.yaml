@@ -1,0 +1,101 @@
+name: Full DevOps Pipeline
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+
+  # -------------------------
+  # 1️⃣ LINT: HTML, CSS, IMAGE
+  # -------------------------
+  lint-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # HTMLHint
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install HTMLHint & CSSLint
+        run: |
+          npm install -g htmlhint csslint
+
+      - name: Validate HTML
+        run: |
+          htmlhint index.html
+
+      - name: Validate CSS
+        run: |
+          csslint style.css
+
+      - name: Check image exists
+        run: |
+          if [ ! -f "images/slika.jpg" ]; then
+            echo "Image images/slika.jpg missing!"
+            exit 1
+          fi
+          echo "Image OK ✔"
+
+  # -------------------------
+  # 2️⃣ PYTHON SMOKE TESTS
+  # -------------------------
+  smoke-tests:
+    needs: lint-checks
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run smoke test
+        run: python smoke-check.py
+
+
+  # -------------------------
+  # 3️⃣ DEPLOY NA GITHUB PAGES
+  # -------------------------
+  deploy-pages:
+    needs: smoke-tests
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."   # Deploy celoten repo (HTML/CSS/IMG)
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
