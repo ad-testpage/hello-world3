@@ -32,7 +32,7 @@ p {
 .bottom-right {
     position: fixed;   /* fiksno na ekran, ostane med scrollanjem */
     bottom: 1000px;      /* razdalja od spodnjega roba */
-    right: 2000px;       /* razdalja od desnega roba */
+    right: 100px;       /* razdalja od desnega roba */
     width: 200px;      /* prilagodi velikost slike */
     height: auto;      /* ohranja razmerje slike */
     z-index: 5;     /* slika bo nad ostalo vsebino */
