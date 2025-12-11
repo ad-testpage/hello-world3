@@ -1,12 +1,15 @@
-/* style.css */
+/* style.css - popravljena in izboljšana različica */
+
+/* Osnovni stil za body */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f03a;
+    background-color: #f0f0f0cc; /* rahlo pregledno ozadje */
     color: #333333;
-    margin: 10;
-    padding: 1000;
+    margin: 10px;
+    padding: 20px; /* manj agresiven padding kot prej */
 }
 
+/* Header */
 header {
     background-color: #af634c;
     color: white;
@@ -14,26 +17,49 @@ header {
     text-align: center;
 }
 
+/* Naslovi */
 h1 {
-    font-size: 1.5rem; /* manjše in berljivo */
-    margin: 30;
+    font-size: 2rem;   /* primerno za berljiv naslov */
+    margin: 1rem 0;    /* zgoraj in spodaj 1rem, levo/desno 0 */
 }
 
+/* Glavni del */
 main {
-    padding: 5rem;
+    padding: 2rem;     /* manjše in bolj uravnoteženo */
+    max-width: 1200px; /* omejitev širine za boljšo berljivost */
+    margin: 0 auto;    /* centrirano */
 }
 
+/* Odstavki */
 p {
-    line-height: 3.6;
-    font-size: 1.2rem;
+    line-height: 1.6;  /* bolj prijetno za branje */
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
 }
 
-/* slika desno spodaj */
+/* Slika spodaj desno */
 .bottom-right {
-    position: fixed;   /* fiksno na ekran, ostane med scrollanjem */
-    bottom: 150px;      /* razdalja od spodnjega roba */
-    right: 1px;       /* razdalja od desnega roba */
-    width: 200px;      /* prilagodi velikost slike */
+    position: fixed;   /* ostane na istem mestu ob scrollanju */
+    bottom: 20px;      /* primerno od spodnjega roba */
+    right: 20px;       /* primerno od desnega roba */
+    width: 150px;      /* prilagojena širina, responsive-friendly */
     height: auto;      /* ohranja razmerje slike */
-    z-index: 5;     /* slika bo nad ostalo vsebino */
+    z-index: 100;      /* vedno nad ostalo vsebino */
+}
+
+/* Dodatno: responsive prilagoditve */
+@media (max-width: 768px) {
+    main {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .bottom-right {
+        width: 100px;   /* manjša slika na manjših zaslonih */
+        bottom: 10px;
+        right: 10px;
+    }
 }
