@@ -31,7 +31,7 @@ p {
 /* slika desno spodaj */
 .bottom-right {
     position: fixed;   /* fiksno na ekran, ostane med scrollanjem */
-    bottom: 300px;      /* razdalja od spodnjega roba */
+    bottom: 1000px;      /* razdalja od spodnjega roba */
     right: 2000px;       /* razdalja od desnega roba */
     width: 200px;      /* prilagodi velikost slike */
     height: auto;      /* ohranja razmerje slike */
